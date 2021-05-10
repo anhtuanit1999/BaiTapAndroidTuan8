@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     Button btnAdd, btnDelete;
     EditText txtName;
-    DataUser dataUser;
+//    DataUser dataUser;
+    AppDatabase db;
+    UserDao userDao;
     ListView lv;
     ArrayAdapter adapter;
     ArrayList nameList, idList;
@@ -28,7 +31,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataUser = new DataUser(this, "userdb.sqlite", null, 1);
+//        dataUser = new DataUser(this, "userdb.sqlite", null, 1);
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "userDB.appdatabase")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+        userDao = db.userDao();
+
         btnAdd = findViewById(R.id.btnAdd);
         btnDelete = findViewById(R.id.btnDelete);
         txtName = findViewById(R.id.txtName);
@@ -43,20 +53,22 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataUser.addUser(new User(txtName.getText().toString()));
+                userDao.addUser(new User(txtName.getText().toString()));
                 getNameList();
                 adapter.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this, "hihi", Toast.LENGTH_SHORT).show();
+
             }
         });
+        lv.setAdapter(adapter);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dataUser.deleteUser((int)idList.get(index));
+                userDao.delete(userDao.getUserById((Integer) idList.get(index)));
                 getNameList();
                 adapter.notifyDataSetChanged();
-                Toast.makeText(MainActivity.this,
-                        "Succesful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"hihi", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -74,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         nameList.clear();
         idList.clear();
-        for (Iterator iterator = dataUser.getUsers().iterator(); iterator.hasNext(); ) {
+        for (Iterator iterator = userDao.getAll().iterator(); iterator.hasNext(); ) {
             User user = (User)  iterator.next();
             nameList.add(user.getName());
             idList.add(user.getId());
