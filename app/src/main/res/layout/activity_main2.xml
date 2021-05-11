@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/tvDiaDiem"
+        android:layout_width="337dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_text_main2"
+        android:drawableLeft="@drawable/human"
+        android:ems="10"
+        android:hint="The place that you will visit in\nthe future"
+        android:inputType="textPersonName"
+        android:padding="50px"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="176dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="8dp"
+        android:text="Save"
+        android:textColor="#F1F1F1 "
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDiaDiem" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="179dp"
+        android:layout_height="74dp"
+        android:text="Cancel"
+        android:textColor="#F1F1F1 "
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnSave" />
+
+    <ListView
+        android:id="@+id/lvDiaDiem"
+        android:layout_width="409dp"
+        android:layout_height="407dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDiaDiem"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
